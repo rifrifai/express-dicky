@@ -4,6 +4,7 @@ import cors from "cors";
 import helmet from "helmet";
 import bodyParser from "body-parser";
 import session from "express-session";
+import userRoute from "./routes/userRoute.js";
 
 dotenv.config();
 const app = express();
@@ -44,22 +45,24 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-app.get("/", (req, res) => {
-  res.send("Halo Dunia!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Halo Dunia!");
+// });
 
-app.get("/about", (req, res) => {
-  res.send("This is about");
-});
+// app.get("/about", (req, res) => {
+//   res.send("This is about");
+// });
 
-app.get("/contact", (req, res) => {
-  res.send("This is contact");
-});
+// app.get("/contact", (req, res) => {
+//   res.send("This is contact");
+// });
 
-app.get("/users/:id", (req, res) => {
-  const { id } = req.params;
-  res.send(`Menampilkan user ID ${id}`);
-});
+// app.get("/users/:id", (req, res) => {
+//   const { id } = req.params;
+//   res.send(`Menampilkan user ID ${id}`);
+// });
+
+app.use("/api", userRoute);
 
 app.post("/submit", (req, res) => {
   res.send("Data berhasil dikirim");
