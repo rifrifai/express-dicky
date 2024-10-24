@@ -63,5 +63,24 @@ export const updateUser = async (req, res) => {
       message: "User updated successfully",
       data: result,
     });
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [result] = await db.execute("DELETE FROM users WHERE id = ?", [id]);
+    if (result.affectedRows === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    res
+      .status(200)
+      .json({ sucess: true, message: "User deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
