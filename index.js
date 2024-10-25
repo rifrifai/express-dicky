@@ -5,6 +5,8 @@ import helmet from "helmet";
 import bodyParser from "body-parser";
 import session from "express-session";
 import userRoute from "./routes/userRoute.js";
+import bookRoute from "./routes/bookRoute.js";
+import db from "./config/db.js";
 
 dotenv.config();
 const app = express();
@@ -63,11 +65,18 @@ app.use((err, req, res, next) => {
 // });
 
 app.use("/api", userRoute);
+app.use("/api", bookRoute);
 
 app.post("/submit", (req, res) => {
   res.send("Data berhasil dikirim");
 });
 
-app.listen(PORT, () => {
-  console.log(`Server berjalan di http://localhost:${PORT}`);
-});
+db.sync()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server berjalan di http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Terjadi kesalahan sinkronasi db: ", err);
+  });
