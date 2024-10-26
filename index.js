@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import session from "express-session";
 import userRoute from "./routes/userRoute.js";
 import bookRoute from "./routes/bookRoute.js";
+import carRoute from "./routes/carRoute.js";
 import db from "./config/db.js";
 
 dotenv.config();
@@ -66,6 +67,7 @@ app.use((err, req, res, next) => {
 
 app.use("/api", userRoute);
 app.use("/api", bookRoute);
+app.use("/api", carRoute);
 
 app.post("/submit", (req, res) => {
   res.send("Data berhasil dikirim");
